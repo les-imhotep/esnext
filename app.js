@@ -120,14 +120,14 @@ class TripService {
 
         return new Promise((resolve, reject) => {
 
-            setTimeout(() => function (err, name) {
-                let search = Array.from(tripService).filter()
+            setTimeout(() => {
+                let search = Array.from(tripService).filter(trip => trip.name === tripName)
 
                 // TODO utiliser resolve et reject en fonction du résultat de la recherche
-                if (err) {
-                    reject(err); // en cas d'erreur
+                if (search.length === 0) {
+                    reject(`Aucun ${tripName} trouver, veuillez resssayer avec un autre nom`); // en cas d'erreur
                 } else {
-                    resolve(name); // en cas de succès
+                    resolve(tab[0]); // en cas de succès
                 }
             }, 2000)
         });
@@ -142,8 +142,8 @@ class PriceService {
         // 'rio-de-janeiro' --> price = 800)
         // no price for 'nantes'
         let priceService = new Map();
-        tripMap.set('paris', 100)
-        tripMap.set('rio-de-janeiro', 800)
+        priceService.set('paris', 100)
+        priceService.set('rio-de-janeiro', 800)
 
 
     }
@@ -156,8 +156,16 @@ class PriceService {
                 // ici l'exécution du code est asynchrone
 
                 // TODO utiliser resolve et reject en fonction du résultat de la recherche
+                if (!this.priceService.get(tripId)) {
+                    reject(`No price found for id ${tripId}`);
+                } else {
+                    resolve(this.priceService.get(tripId));
+                }
+
 
             }, 2000)
         });
     }
 }
+
+
