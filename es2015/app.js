@@ -170,3 +170,11 @@ class PriceService {
                });
     }
 }
+
+let ts= new TripService();
+let ps= new PriceService();
+
+//Pour tester l'utilisation des services TripService et PriceService
+ps.findPriceByTripId("paris")
+.then(trip => {lg(`Price found : ${price}`)})
+.catch(error => {lg(error)});
