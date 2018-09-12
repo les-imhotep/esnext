@@ -107,10 +107,10 @@ class TripService {
 
     constructor() {
         // TODO Set of 3 trips
-        let tripService = new Set();
-        tripService.add(new Trip('paris', 'Paris', 'img/paris.jpg'))
-        tripService.add(new Trip('nantes', 'Nantes', 'img/nantes.jpg'))
-        tripService.add(new Trip('rio-de-janeiro', 'Rio de Janeiro', 'img/rio-de-janeiro.jpg'))
+        this.listTrip = new Set();
+        this.listTrip.add(new Trip('paris', 'Paris', 'img/paris.jpg'))
+        this.listTrip.add(new Trip('nantes', 'Nantes', 'img/nantes.jpg'))
+        this.listTrip.add(new Trip('rio-de-janeiro', 'Rio de Janeiro', 'img/rio-de-janeiro.jpg'))
 
 
 
@@ -121,13 +121,13 @@ class TripService {
         return new Promise((resolve, reject) => {
 
             setTimeout(() => {
-                let search = Array.from(tripService).filter(trip => trip.name === tripName)
+                let searchName = Array.from(this.listTrip).filter(trip => trip.name === tripName)
 
                 // TODO utiliser resolve et reject en fonction du résultat de la recherche
-                if (search.length === 0) {
+                if (searchName.length === 0) {
                     reject(`Aucun ${tripName} trouver, veuillez resssayer avec un autre nom`); // en cas d'erreur
                 } else {
-                    resolve(tab[0]); // en cas de succès
+                    resolve(searchName[0]); // en cas de succès
                 }
             }, 2000)
         });
@@ -156,11 +156,7 @@ class PriceService {
                 // ici l'exécution du code est asynchrone
 
                 // TODO utiliser resolve et reject en fonction du résultat de la recherche
-                if (!this.priceService.get(tripId)) {
-                    reject(`No price found for id ${tripId}`);
-                } else {
-                    resolve(this.priceService.get(tripId));
-                }
+
 
 
             }, 2000)
@@ -169,3 +165,8 @@ class PriceService {
 }
 
 
+let testTripService = new TripService();
+let testPriceService = new PriceService();
+
+
+testTripService.findByName("Paris")
