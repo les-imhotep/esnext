@@ -133,20 +133,11 @@ class TripService {
          return new Promise((resolve, reject) => {
 
             setTimeout( () => {
-                var voyage;
-                var err = 0;
-                // ici l'exécution du code est asynchrone
-                this.trips.forEach(function(element){
-                    if(element.name===tripName){
-                        voyage = element;
-                        err++;
-                    }
-                });
-
-                if(err) {
-                    reject('No trip with name :', tripName); // en cas d'erreur
+                let tab = Array.from(this.trips).filter(trip => trip.name === tripName);
+                 if(tab.length === 0) {
+                    reject(`No trip with name ${tripName}`); // en cas d'erreur
                 } else {
-                    resolve('Voyage correspondant :', voyage); // en cas de succès
+                    resolve(tab[0]); // en cas de succès
                 }
 
             }, 2000)
@@ -184,6 +175,13 @@ let priceService = new PriceService();
 tripService.findByName("Paris")
     .then(trip => {console.log(`Trip found : ${trip}`)})
     .catch(error => {console.log(error)});
-    tripService.findByName("Toulouse")
+tripService.findByName("Toulouse")
     .then(trip => {console.log(`Trip found : ${trip}`)})
+    .catch(error => {console.log(error)});
+
+priceService.findPriceByTripId("paris")
+    .then(price => {console.log(`Price found : ${price}`)})
+    .catch(error => {console.log(error)});
+priceService.findPriceByTripId("nantes")
+    .then(price => {console.log(`Price found : ${price}`)})
     .catch(error => {console.log(error)});
